@@ -42,7 +42,7 @@ predict_surrogate_local_model <- function(explainer,
   localModel::individual_surrogate_model(explainer,
                                new_observation,
                                size = size,
-                               seed = seed)
+                               seed = seed, ...)
 }
 
 
@@ -72,12 +72,12 @@ predict_surrogate_lime <- function(explainer, new_observation, n_features = 4, n
   class(explainer) <- "dalex_explainer"
 
   lime_model <- lime::lime(x = explainer$data[,colnames(new_observation)],
-                        model = explainer)
+                        model = explainer, ...)
 
   lime_expl <- lime::explain(x = new_observation,
                              explainer = lime_model,
                              n_features = n_features,
-                             n_permutations = n_permutations)
+                             n_permutations = n_permutations, ...)
   class(lime_expl) <- c("predict_surrogate_lime", class(lime_expl))
   lime_expl
 }
